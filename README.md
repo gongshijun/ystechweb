@@ -1,3 +1,5 @@
 # ystechweb
 
-# step 1
+step 1
+Install tornado on Ubuntu16.04
+  pip install tornado
