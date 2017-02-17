@@ -11,13 +11,16 @@ class IndexHandler(tornado.web.RequestHandler):
     def post(self):
         username = self.get_argument("username")
         password = self.get_argument("password")
-        user_obj = mrd.find_from_collection(table="user", object_num=1, condition="name", value=username)
+        user_obj = mrd.find_from_collection(table="user", object_num=1, condition="user", value=username)
         if user_obj:
             db_pwd = user_obj['pwd']
             if db_pwd == password:
-                self.write("welcome you:"+username)
+                # self.write("welcome you:"+username)
+                self.redirect('/matlab')
+                return
             else:
                 self.write("your password was not right.")
+                # self.render("matlab.html")
         else:
             self.write("There is no this user"+username)
         # self.write(username)
