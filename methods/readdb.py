@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from db import db
+from methods.db import db
 
 def find_from_collection(table, object_num, condition, value):
     col = db[table]

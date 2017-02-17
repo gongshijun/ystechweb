@@ -34,6 +34,5 @@ else:
 
 client = MongoClient(uri)
 db = client[options.mongodb_useDB]
-
 def mongodb_close():
     client.close()
