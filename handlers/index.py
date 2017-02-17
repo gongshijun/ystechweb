@@ -17,7 +17,6 @@ class IndexHandler(tornado.web.RequestHandler):
             if db_pwd == password:
                 # self.write("welcome you:"+username)
                 self.redirect('/matlab')
-                return
             else:
                 self.write("your password was not right.")
                 # self.render("matlab.html")

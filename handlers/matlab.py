@@ -5,7 +5,7 @@ import tornado.web
 
 class MMEHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("matlab.html")
+        return self.render("matlab.html")
 
     def post(self):
         MME = self.get_argument("MME")
