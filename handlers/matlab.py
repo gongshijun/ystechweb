@@ -11,24 +11,31 @@ class MMEHandler(tornado.web.RequestHandler):
         return self.render("matlab.html")
 
     def post(self):
+        # m文件的目录
         matfolder='matfile/'
+        # 结果重定向的位置
         outfile='../common/result.txt'
-        cmd='matlab -nodesktop -nosplash -r '
-
+        cmd='nohup matlab -nodesktop -nosplash -r '
+        
+        # 获得网页上的内容
         MME = self.get_argument("MME")
         matfile = "mme" + str(int(time.time())) 
         file_object = open('./' + matfolder + matfile + '.m', 'w')
-        file_object.write('f=')
         file_object.write(MME)
         file_object.write("\n")
-        file_object.write("save '{0}' -ascii f;\n".format(outfile))
         file_object.write("exit()")
         file_object.close()
-        #执行命令
-        
+     
+        # 执行shell命令
+        cmd = cmd + matfile + '>' + outfile 
         os.chdir("./matfile")
-        CR.execmd(cmd + matfile)
-        data=CR.get_result(outfile)
-        print(data)
+        CR.execmd(cmd)
+        
+        # 获取结果
+        #data=CR.Result(outfile)
+        #print(data)
+        data=CR.Result('../common/FKPIDB.txt')
         os.chdir("../")
+        
+        #显示结果到网页上
         self.write(data)
