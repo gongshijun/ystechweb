@@ -4,13 +4,70 @@
        <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1" />
        <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
-       <script src="{{static_url("js/script.js")}}"></script>
        <title>www.yushu.com</title>
 </head>
 <body>
       <h2>matlab</h2>
-      <form method="POST" action="/matlab">
-            <p><span>Mathematical expression:</span><input type="yexy" name="MME" /></p>
-      </form>
+      <form method="POST" id="alpha-exp">
+            <p><span>Mathematical expression:</span><input type="text" id="MME" /></p>
+			<p><input type="submit" value="Submit" id="btnsubmit"/></p>  		
+	  </form>
+	  <table id="Result" border="1">
+	  		<caption>DashBoard</caption>
+	  </table>
+<script>
+function getTline(v,flag=0){
+	var tmp="";
+	var i=0;
+	tmp +='<tr>';
+	
+	for(p in v){
+		if((flag==0&&i==0)||(flag!=0)){//first column or first column
+			th='<th>';
+			thr='</th>';
+		}
+		else{
+			th='<td>';
+			thr='</td>';
+		}
+		tmp +=th;
+		if(flag==1){tmp +=p;}
+		else{
+        	if(v[p]==null) tmp +='*';//NA	
+			else tmp +=v[p];
+		}
+		tmp +=thr;
+		i = i+1;
+	}
+	tmp +='</tr>';
+	return tmp;
+}
+$(document).ready(function(){
+	$('#alpha-exp').submit(function(){
+	var mme = $("#MME").val();
+	var exp = {"MME":mme};
+	
+	$.ajax({
+		type:'POST',
+		url:'/matlab',
+		data:exp,
+		success:function(data){
+			alert("receive data success!");
+			table="";
+			$.each(data,function(k,v){
+				if(k=="0"){//first row
+					table += getTline(v,1);
+					table += getTline(v);
+				}
+				table +=getTline(v);				
+			});
+			$('#Result').append(table);
+		},
+		dataType:'json'
+		});
+	return false;
+	});
+});
+</script>
 </body>
 </html>

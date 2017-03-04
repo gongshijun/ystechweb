@@ -9,9 +9,10 @@ class IndexHandler(tornado.web.RequestHandler):
         self.render("index.html")
 
     def post(self):
-        username = self.get_argument("username")
-        password = self.get_argument("password")
+        username = self.get_argument("username","")
+        password = self.get_argument("password","")
         user_obj = mrd.find_from_collection(table="user", object_num=1, condition="user", value=username)
+        print(user_obj)
         if user_obj:
             db_pwd = user_obj['pwd']
             if db_pwd == password:
