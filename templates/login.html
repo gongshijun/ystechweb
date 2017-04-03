@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>www.yushu.com</title>
+	<style type="text/css">
+		#LoginPageBlank {
+			height:50px;
+		}
+		#LoginPageTop {
+			height:30px;
+			padding-bottom:10px;
+			margin:0 10%;
+		}	
+		#LoginPageBody {
+			margin:0 10%;
+            height:800px;
+			position:relative;
+			background:#eee;
+		}
+		#form {
+			position:absolute;
+			right:10%;
+			bottom:20%;
+			width:30%;
+			height:500px;
+			background:#fff;
+		}
+		#form form {
+			padding:20px;
+			margin-bottom:20px;
+		}
+		#form #form-title {
+			padding:20px;
+			font-size:20px;
+			font-weight:bold;
+			background:#eef;
+		}
+		.input {
+			width:80%;
+			margin-bottom:30px;
+		}
+		.input input {
+			width:80%;
+			margin-left:25%;
+		}
+	</style>
+</head>
+<body>
+	<div id="LoginPageBlank"></div>
+	<div id="LoginPageTop">
+		<!--<p style="float:left">yushu fintech</p>-->
+		<p style="float:right">author  472179216@qq.com</p>
+	</div>
+	<div id="LoginPageBody">
+		<div id="form">
+			<div id="form-title"><p>Login</p></div> 	
+			<form method="POST" >
+				<p ><span>Username:</span></p>
+				<p class="input"><input type="text" id="username" /></p>
+				<p><span>Password:</span></p>
+				<p class="input"><input type="password" id="password" /></p>
+				<p style="margin:40px"><input type="BUTTON" value="LOGIN" id="login" style="float:right" /></p> 
+			</form>
+			</div>
+		</div>
+	<div id="LoginPageBottom"></div>
+	<script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
+	<script>
+	$(document).ready(function(){
+		$("#login").click(function(){
+			var user = $("#username").val();
+			var pwd = $("#password").val();
+			var pd = {"username":user,"password":pwd};
+			$.post("/login",pd,function(data,status){
+				if(data=="1") alert("Your password is not right.");
+				else if(data=="2") alert("No user "+user);
+				else window.location.href='/';
+			});
+		});
+	});
+	</script>
+</body>
+</html>

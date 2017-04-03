@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1" />
+       <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
+       <title>www.yushu.com</title>
+	   <link rel="stylesheet" type="text/css" href="{{static_url("css/table.css")}}"/>
+	   <style>
+		#header {
+			text-align:left;
+			color:black;
+			font-family:arial,	sans-serif;
+			font-weight:bold;
+			font-size:40px;
+			margin:20px auto;
+		}
+		#header-left {
+			margin:40px 0 40px 20%;
+			float:left;
+		}
+		#nav {
+			background-color:#eeeeee;
+			width:100%;
+			height:40px;
+			font-family:arial, sans-serif;
+		}
+		.nav-link {
+			padding-right:10%;
+		}
+		li {
+			float:right;
+			color:blue;
+			text-align:center;
+			margin:10px 30px 10px 10px;
+			font-family:"Raleway", arial, Helvetica, sans-serif;
+		}
+		ul {
+			list-style:none;
+		}
+		#content {
+			padding:10px;
+			width:100%;
+			height:800px;
+		}
+		#foot {
+			margin-bottom:0;
+		}
+	   </style>  
+</head>
+<body>
+	<div id="header">
+		<div id="header-left"></div>
+		<div id="header-center">驭数科技</div>
+		<div id="header-right"></div>
+	</div>
+	<div id="nav">
+		<div class="nav-link">
+		<ul>
+			<li><a href="/login">log in</a></li>
+			<li><a href="/matlab">alpha-mme</a></li>
+			<li><a href="/dashboard">factor-dashboard</a></li>
+			<li><a href="/about">about</a></li>
+		</ul>
+		</div>
+	</div>
+	<div id="content" >
+		<!--<img src="{{static_url("img/welcome.jpg")}}" style="width:100%;"/>-->
+		<p>the main frame of the website.</p>
+		<div id="graph" style="width:800px;height:600px"></div>
+       	<script src="{{static_url("js/echarts.common.min.js")}}"></script>
+		<script type="text/javascript">
+			require.config({
+				paths: {echarts:'static/js'}
+			});
+		require(['echarts','echarts/chart/bar'],(function(ec){
+		
+	    var mychart = ec.init(document.getElementById('graph'));
+
+		option = {
+    		color: ['#3398DB'],
+    		tooltip : {
+        	trigger: 'axis',
+        	axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            	type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+       		 }
+    		},
+    	grid: {
+        	left: '3%',
+        	right: '4%',
+        	bottom: '3%',
+        	containLabel: true
+    		},
+    	xAxis : [
+        	{
+            type : 'category',
+            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    	],
+   		 yAxis : [
+        	{
+            	type : 'value'
+       		 }
+   		 ],
+    	series : [
+        	{
+            name:'直接访问',
+            type:'bar',
+            barWidth: '60%',
+            data:[10, 52, 200, 334, 390, 330, 220]
+       		 }
+    	]
+		};
+
+	mychart.setOption(option);
+	});
+		</script>
+	</div>
+	<div id="foot">
+		<!--<p>author: 472179216@qq.com</p>-->
+	</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+@import static_url(font-awsome.min.css);
+@import "https://fonts.googleapis.com/css?family=Raleway:100,300,600";
+/*
+table {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+*/
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 5px 6%;
+	width: 0 5%;
+	font-family:"Times New Roman", Times, Serif;
+}
+
+table td {
+	padding: 1.0em 1.0em;
+}
+
+table th {
+	color: #555;
+	font-size: 0.9em;
+	font-weight: 600;
+	padding: 0 0.75em;
+	text-align: left;
+}

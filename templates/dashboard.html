@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1" />
+       <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
+       <title>www.yushu.com</title>
+	   <link rel="stylesheet" type="text/css" href="{{static_url("css/table.css")}}"/>
+	   <style>
+		#header {
+			text-align:center;
+			color:black;
+			font-family:Microsoft YaHei;
+			font-weight:bold;
+			font-size:40px;
+			margin:20px auto;
+		}
+		#nav {
+			background-color:#eeeeee;
+			width:100%;
+			height:30px;
+		}
+		#nav-link {
+			position:absolute;
+			right:10px;
+			color:blue;
+		}
+		#nav-link tr td{
+           margin:5px 20px;
+		   padding:0px 20px;
+		}
+		#content {
+			padding:10px;
+		}
+	   </style>  
+</head>
+<body>
+	<div id="header">factor-Dashboard</div>
+	<div id="nav">
+	</div>
+	<div id="content">
+		<h2>select-factor</h2>
+		<form method="POST">
+			<label>Factor: </label>
+			<select id="factor">
+				<option value=1>factor1</option>
+				<option value=2>factor2</option>
+			</select>
+			<p><input type="button" value="Submit" id="btnsubmit"/></p>
+		</form>
+		<table id="Result">
+		</table>
+	<script src="{{static_url("js/script.js")}}"></script>
+	</div>
+</body>
+</html>

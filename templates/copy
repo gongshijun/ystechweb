@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1" />
+       <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
+       <title>www.yushu.com</title>
+	   <link rel="stylesheet" type="text/css" href="{{static_url("css/table.css")}}"/>
+	   <style>
+		#header {
+			text-align:left;
+			color:black;
+			font-family:arial,	sans-serif;
+			font-weight:bold;
+			font-size:40px;
+			margin:20px auto;
+		}
+		#header-left {
+			margin:40px 0 40px 20%;
+			float:left;
+		}
+		#nav {
+			background-color:#eeeeee;
+			width:100%;
+			height:40px;
+			font-family:arial, sans-serif;
+		}
+		.nav-link {
+			padding-right:10%;
+		}
+		li {
+			float:right;
+			color:blue;
+			text-align:center;
+			margin:10px 30px 10px 10px;
+			font-family:"Raleway", arial, Helvetica, sans-serif;
+		}
+		ul {
+			list-style:none;
+		}
+		#content {
+			padding:10px;
+			width:100%;
+			height:800px;
+		}
+		#foot {
+			margin-bottom:0;
+		}
+	   </style>  
+</head>
+<body>
+	<div id="header">
+		<div id="header-left"></div>
+		<div id="header-center">驭数科技</div>
+		<div id="header-right"></div>
+	</div>
+	<div id="nav">
+		<div class="nav-link">
+		<ul>
+			<li><a href="/login">log in</a></li>
+			<li><a href="/matlab">alpha-mme</a></li>
+			<li><a href="/dashboard">factor-dashboard</a></li>
+			<li><a href="/about">about</a></li>
+		</ul>
+		</div>
+	</div>
+	<div id="content" >
+		<!--<img src="{{static_url("img/welcome.jpg")}}" style="width:100%;"/>-->
+		<p>the main frame of the website.</p>
+		<div id="graph" style="width:1000px;height:600px;margin:0 10%"></div>
+	</div>   	
+	<div id="foot"></div>
+		
+		<script src="{{static_url("js/echarts.js")}}"></script>
+	
+		<script type="text/javascript">
+			
+    // Step:3 conifg ECharts's path, link to echarts.js from current page.
+    // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+    require.config({
+        paths: {
+			echarts: '{{static_url('js')}}'
+        }
+    });
+    
+    // Step:4 require echarts and use it in the callback.
+    // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+    require(
+        [
+            'echarts',
+            'echarts/chart/bar',
+            'echarts/chart/line',
+            'echarts/chart/map'
+        ],
+        function (ec) {
+            //--- 折柱 ---
+            var myChart = ec.init(document.getElementById('graph'));
+            myChart.setOption({
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['蒸发量','降水量']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        splitArea : {show : true}
+                    }
+                ],
+                series : [
+                    {
+                        name:'蒸发量',
+                        type:'bar',
+                        data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                    },
+                    {
+                        name:'降水量',
+                        type:'bar',
+                        data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                    }
+                ]
+            });
+            
+        }
+    );
+    
+		</script>
+</body>
+</html>
