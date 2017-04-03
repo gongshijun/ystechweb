@@ -1,18 +1,164 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>www.yushu.com</title>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1" />
+       <title>www.yushu.com</title>
+	   <link rel="stylesheet" type="text/css" href="{{static_url("css/table.css")}}"/>
+	   <style>
+		#header {
+			text-align:left;
+			color:black;
+			font-family:arial,	sans-serif;
+			font-weight:bold;
+			font-size:40px;
+			margin:20px auto;
+		}
+		#header-left {
+			margin:40px 0 40px 20%;
+			float:left;
+		}
+		#nav {
+			background-color:#eeeeee;
+			width:100%;
+			height:40px;
+			font-family:arial, sans-serif;
+		}
+		.nav-link {
+			padding-right:10%;
+		}
+		li {
+			float:right;
+			color:blue;
+			text-align:center;
+			margin:10px 30px 10px 10px;
+			font-family:"Raleway", arial, Helvetica, sans-serif;
+		}
+		ul {
+			list-style:none;
+		}
+		#content {
+			padding:10px;
+			width:100%;
+			height:800px;
+		}
+		#foot {
+			margin-bottom:0;
+		}
+	   </style>  
 </head>
 <body>
-	<h2>Login</h2>
-	<form method="POST" >
-		<p><span>Username:</span><input type="text" id="username" /></p>
-		<p><span>Password:</span><input type="password" id="password" /></p>
-		<p><input type="BUTTON" value="LOGIN" id="login" /></p> 
-	</form>
-	<script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
-	<script src="{{static_url("js/script.js")}}"></script>
+	<div id="header">
+		<div id="header-left"></div>
+		<div id="header-center">驭数科技</div>
+		<div id="header-right"></div>
+	</div>
+	<div id="nav">
+		<div class="nav-link">
+		<ul>
+			<li><a href="/login">log in</a></li>
+			<li><a href="/matlab">alpha-mme</a></li>
+			<li><a href="/dashboard">factor-dashboard</a></li>
+			<li><a href="/about">about</a></li>
+		</ul>
+		</div>
+	</div>
+	<div id="content" >
+		<!--<img src="{{static_url("img/welcome.jpg")}}" style="width:100%;"/>-->
+		<div id="graph" style="width:1000px;height:600px;margin:5% 10%"></div>
+	</div>   	
+	<div id="foot"></div>
+		
+		<script src="{{static_url("js/echarts.js")}}"></script>
+        <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
+		<script type="text/javascript">
+			require.config({
+				paths: {echarts:'{{static_url("js")}}'}
+			});
+			
+		require(['echarts',
+				'echarts/chart/bar',
+				'echarts/chart/line',
+				'echarts/chart/scatter'],function(ec){
+		
+	    var mychart = ec.init(document.getElementById('graph'));
+		var zrColor = require('zrender/tool/color');
+    	var color=['#3398DB','#87cefa','#da70d6','#32cd32','#6495ed',
+					'#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
+					'#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
+					'#6b8e23','#ff00ff','#3cb371','#b8860b','#30e0e0'];
+		var itemStyle = {
+			normal:{
+				color:function(params){
+					if (params.dataIndex<0){
+						return zrColor.lift(
+								color[color.length-1],params.seriesIndex*0.1
+								);
+					}
+					else {	
+						return zrColor.lift(
+								color[params.dataIndex],params.seriesIndex*0.1
+								);
+					}
+				}
+			}
+		};
+
+		var option = {
+    		tooltip : {
+    			show:true
+			},
+		  toolbox : {
+		  	show : true,
+		 	feature : {
+		  		mark :{show:true},
+	  			dataView:{show:true,readOnly:false},
+				magicType:{show:true,type:['line','bar']},
+				restore:{show:true},	  
+		 	}
+		  },
+			legend : {
+				data : []
+			},
+    		grid: {
+        		left: '3%',
+        		right: '4%',
+        		bottom: '3%',
+        		containLabel: true
+    		},
+    		xAxis : [
+        	{
+            type : 'category',
+            data : [],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    	],
+   		 yAxis : [
+        	{
+            	type : 'value'
+       		}
+   		 ],
+    	series : []
+		};
+		$.ajax({
+			type : 'POST',
+			url : '/',
+			success : function(result){
+				var jsonobj = eval(result);
+				option.legend.data = jsonobj.legend;
+				option.xAxis[0].data = jsonobj.axis;
+				var series_arr = jsonobj.series;
+				for(var i=0;i<series_arr.length;i++){
+					<!--result.series[i]['itemStyle']=itemStyle;-->
+					result.series[i]['name']=jsonobj.legend[i];
+		  			option.series[i]=result.series[i];
+				}
+				mychart.setOption(option);
+			}
+		});
+	});
+		</script>
 </body>
 </html>

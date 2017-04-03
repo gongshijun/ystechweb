@@ -5,15 +5,29 @@
        <meta name="viewport" content="width=device-width, initial-scale=1" />
        <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
        <title>www.yushu.com</title>
+	   <link rel="stylesheet" type="text/css" href="{{static_url("css/main.css")}}"/>
+	   <style type="text/css">
+       		h2 { text-align:center;
+			     padding:30px 0 5px 0;
+			}
+			#MME { text-indent:2%;
+				   margin:10px 6%;
+			}
+			p {
+				margin-left:3%; 
+				margin-right:10%;
+			}
+	   </style>
+	  
 </head>
 <body>
-      <h2>matlab</h2>
+      <h2>Alpha</h2>
       <form method="POST" id="alpha-exp">
-            <p><span>Mathematical expression:</span><input type="text" id="MME" /></p>
+            <p><span>Mathematical expression:</span><input type="text" style="height:auto" id="MME" /></p>
 			<p><input type="submit" value="Submit" id="btnsubmit"/></p>  		
 	  </form>
 	  <table id="Result" border="1">
-	  		<caption>DashBoard</caption>
+		  <p><caption>ResultTable</caption></p>
 	  </table>
 <script>
 function getTline(v,flag=0){
@@ -43,7 +57,7 @@ function getTline(v,flag=0){
 	return tmp;
 }
 $(document).ready(function(){
-	$('#alpha-exp').submit(function(){
+	$('#btnsubmit').click(function(){
 	var mme = $("#MME").val();
 	var exp = {"MME":mme};
 	
@@ -52,16 +66,17 @@ $(document).ready(function(){
 		url:'/matlab',
 		data:exp,
 		success:function(data){
-			alert("receive data success!");
-			table="";
+			//alert("receive data success!");
+			table="<caption>ResultTable</caption>";
 			$.each(data,function(k,v){
 				if(k=="0"){//first row
 					table += getTline(v,1);
 					table += getTline(v);
 				}
-				table +=getTline(v);				
+				else
+					table +=getTline(v);				
 			});
-			$('#Result').append(table);
+			$('#Result').html(table);
 		},
 		dataType:'json'
 		});
