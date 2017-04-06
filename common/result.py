@@ -50,12 +50,9 @@ def result2json(outfile,sep):
 def result2echarts(filename):
     data = pd.read_table(filename,sep='|')
     data.fillna(0,inplace=True)
-    # print(data.info())
     column = data.columns
     # axis
     axis = list(data[column[0]].values)
-    print(type(axis[0]))
-    # print(axis)
     # legend
     legend = list(column[1:].values)
     # print(legend)
@@ -63,7 +60,6 @@ def result2echarts(filename):
     series = []
     for item in legend:
         tmp = list(data[item].values)
-        print(tmp[0])
         series.append({'data':tmp,'type':'bar'})
     # print(series)
     return legend, axis, series
