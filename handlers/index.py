@@ -10,13 +10,14 @@ class IndexHandler(tornado.web.RequestHandler):
         self.render("index.html")
 
     def post(self):
-        data = {'legend':['邮件营销','联盟广告','视频广告','直接访问','搜索引擎'],
-                'axis':['周一','周二','周三','周四','周五','周六','周日'],
-                'series':[{'type':'line','data':[120,132,101,134,90,230,210]},
-                    {'type':'line','data':[220,182,191,234,290,330,310]},
-                    {'type':'line','data':[150,232,201,154,190,330,410]},
-                    {'type':'line','data':[320,332,301,334,390,330,320]},
-                    {'type':'line','data':[820,932,901,934,1290,1330,1320]}]}
-        #print(data)
+        filename='./common/AlphaDaily.txt'
+        legend, axis, series = CR.result2echarts(filename)
+        # legend = ['A','B','C']
+        # axis=[1,2,3]
+        # series =[{'data':[1,2,3.3],'type':'bar'},{'data':[1.343513,3.45,5.7846],'type':'bar'},{'data':[12,4,5.56],'type':'bar'}]
+        data = {'legend': legend,
+                'axis': axis,
+                'series': series}
+        # print(data)
         self.write(data)
 

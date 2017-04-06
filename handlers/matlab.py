@@ -35,6 +35,6 @@ class MMEHandler(tornado.web.RequestHandler):
         os.chdir("../")
         
         # present excel
-        data = CR.result2json('./common/FKPIDB.txt')
+        data = CR.result2json('./common/FKPIDB.txt', sep=',')
         # write back data
         self.write(data)

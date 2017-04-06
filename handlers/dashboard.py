@@ -10,6 +10,6 @@ class DashHandler(tornado.web.RequestHandler):
     
     def post(self):
         select = self.get_argument("select","")     
-        data=CR.result2json('./common/FKPIDB.txt')
+        data=CR.result2json('./common/FKPIDB.txt', sep=",")
         print(select)
         self.write(data)

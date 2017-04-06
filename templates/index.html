@@ -71,6 +71,7 @@
 		
 		<script src="{{static_url("js/echarts.js")}}"></script>
         <script src="{{static_url("js/jquery-3.1.1.min.js")}}"></script>
+		<!--echarts	-->
 		<script type="text/javascript">
 			require.config({
 				paths: {echarts:'{{static_url("js")}}'}
@@ -146,6 +147,7 @@
 			type : 'POST',
 			url : '/',
 			success : function(result){
+				alert("received");
 				var jsonobj = eval(result);
 				option.legend.data = jsonobj.legend;
 				option.xAxis[0].data = jsonobj.axis;
